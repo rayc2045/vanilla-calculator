@@ -1,0 +1,184 @@
+@import url("https://fonts.googleapis.com/css?family=M+PLUS+1p:100,300,400,500,700,800,900&display=swap")
+
+$beige: #ECEAEB
+$brown: #9D9192
+$darkBrown: #262425
+$lightGrey: #C2C0C2
+$grey: #AAA
+$black: #222
+
+$bodyGradient: linier-gradient(90deg, $brown, $beige)
+$appGradient: linear-gradient(40deg, $darkBrown, $brown)
+$lightBtnGradient: linear-gradient(45deg, $beige, $grey)
+$darkBtnGradient: linear-gradient(40deg, $brown, $black)
+$zeroBtnGradient: linear-gradient(10deg, $brown, $black)
+
+$lightBtnShadow: -5px 5px 10px rgba($black, 0.6) /* 接近光的地方陰影較弱 */
+$darkBtnShadow: -3px 3px 5px rgba($black, 0.8)
+$btnActiveShadow: -3px 3px 5px rgba($black, 0.5)
+
+$btnBorder: 2px solid rgba($darkBrown, 0.7)
+$btnWidth: 54px
+$btnGap: 9px
+
+@mixin size($width, $height:$width, $bdrs:0)
+  width: $width
+  height: $height
+  border-radius: $bdrs
+  
+@mixin flexLeft
+  display: flex
+  justify-content: flex-start
+  align-items: center
+  
+@mixin flexCenter
+  display: flex
+  justify-content: center
+  align-items: center
+
+@mixin flexRight
+  display: flex
+  justify-content: flex-end
+  align-items: center
+  
+@mixin screenCenter
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  
+@mixin screenRight
+  display: flex
+  justify-content: center
+  align-items: flex-end
+  flex-direction: column
+  
+@keyframes allclear
+  0%
+    opacity: 1
+  100%
+    transform: translateX(-25%)
+    opacity: 0
+
+*, *:before, *:after
+  font-family: 'M PLUS 1p', sans-serif
+  font-size: 16px
+  cursor: default
+  user-select: none
+  -moz-user-select: none
+  -webkit-user-select: none
+  -ms-user-select: none
+  // border: 1px solid #000 // debug border
+
+html, body
+  margin: 0
+  +size(100%)
+  +flexCenter
+  background: $lightGrey
+  overflow: hidden
+  
+.iphoneX
+  +size(266px, 580px, 45px)
+  min-width: 266px
+  border: 10px solid $black
+  box-shadow: -5px 15px 60px rgba($black, 0.7)
+  +screenCenter
+  overflow: hidden
+  position: relative
+  transform: scale(0.8)
+  .top
+    +size(150px, 20px)
+    position: absolute
+    top: 0
+    background-color: $black
+    border-radius: 0 0 15px 15px
+  @media screen and (min-width: 400px)
+    transform: scale(1)
+  
+.app
+  +size(100%, 100%)
+  +screenCenter
+  background: $appGradient
+  background-size: 100% 110%
+  
+.allclear
+  animation: allclear 0.8s forwards
+  
+.textview
+  +size(218px, 96px)
+  color: $beige
+  margin-top: -42px
+  margin-bottom: 12px
+  position: relative
+  white-space: nowrap /* 不跳行 */
+  overflow: hidden
+
+.input
+  height: 20px
+  position: absolute
+  right: 0
+  top: 5px
+  font-size: 14px
+  opacity: 0.5
+  
+.result
+  height: 74px
+  position: absolute
+  right: 0
+  top: 15px
+  font-size: 50px
+  +flexCenter
+  transition: 0.2s
+.mediumText
+  font-size: 35px
+.smallText
+  font-size: 25px
+.verySmallText
+  font-size: 20px
+  
+.btns
+  display: grid
+  grid-template-columns: repeat(4, $btnWidth)
+  grid-template-rows: repeat(5, $btnWidth)
+  grid-gap: $btnGap
+  
+.btn
+  grid-column: span 1
+  grid-row: span 1
+  border-radius: 50%
+  border: $btnBorder
+  background: $darkBtnGradient
+  box-shadow: $darkBtnShadow
+  color: $beige
+  +flexCenter
+  cursor: pointer
+  &:active
+    background-size: 120%
+    box-shadow: $btnActiveShadow
+    
+.zero
+  grid-column: span 2
+  border-radius: $btnWidth / 2
+  background: $zeroBtnGradient
+  +flexLeft
+  padding-left: $btnWidth / 2 - 6
+    
+.clear, .back, .percent, .devide, .multiply, .minus, .plus, .equals
+  border: 2px solid $lightGrey
+  background: $lightBtnGradient
+  box-shadow: $lightBtnShadow
+  color: rgba($darkBrown, 0.6)
+.back
+  font-size: 24px
+.multiply
+  font-size: 12px
+.minus
+  font-size: 18px
+.plus
+  font-size: 14px
+    
+.line
+  +size(35%, 5px, 10px)
+  background-color: $beige
+  position: absolute
+  bottom: 24px

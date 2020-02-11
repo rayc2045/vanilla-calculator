@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css?family=M+PLUS+1p:100,300,400,500,700,800,900&display=swap");
+
+@keyframes allclear {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-25%);
+    opacity: 0;
+  }
+}
+
+*, *:before, *:after {
+  font-family: "M PLUS 1p", sans-serif;
+  font-size: 16px;
+  cursor: default;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #C2C0C2;
+  overflow: hidden;
+}
+
+.iphoneX {
+  width: 266px;
+  height: 580px;
+  border-radius: 45px;
+  min-width: 266px;
+  border: 10px solid #222;
+  box-shadow: -5px 15px 60px rgba(34, 34, 34, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transform: scale(0.8);
+}
+.iphoneX .top {
+  width: 150px;
+  height: 20px;
+  border-radius: 0;
+  position: absolute;
+  top: 0;
+  background-color: #222;
+  border-radius: 0 0 15px 15px;
+}
+@media screen and (min-width: 400px) {
+  .iphoneX {
+    transform: scale(1);
+  }
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(40deg, #262425, #9D9192);
+  background-size: 100% 110%;
+}
+
+.allclear {
+  animation: allclear 0.8s forwards;
+}
+
+.textview {
+  width: 218px;
+  height: 96px;
+  border-radius: 0;
+  color: #ECEAEB;
+  margin-top: -42px;
+  margin-bottom: 12px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.input {
+  height: 20px;
+  position: absolute;
+  right: 0;
+  top: 5px;
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+.result {
+  height: 74px;
+  position: absolute;
+  right: 0;
+  top: 15px;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+}
+
+.mediumText {
+  font-size: 35px;
+}
+
+.smallText {
+  font-size: 25px;
+}
+
+.verySmallText {
+  font-size: 20px;
+}
+
+.btns {
+  display: grid;
+  grid-template-columns: repeat(4, 54px);
+  grid-template-rows: repeat(5, 54px);
+  grid-gap: 9px;
+}
+
+.btn {
+  grid-column: span 1;
+  grid-row: span 1;
+  border-radius: 50%;
+  border: 2px solid rgba(38, 36, 37, 0.7);
+  background: linear-gradient(40deg, #9D9192, #222);
+  box-shadow: -3px 3px 5px rgba(34, 34, 34, 0.8);
+  color: #ECEAEB;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.btn:active {
+  background-size: 120%;
+  box-shadow: -3px 3px 5px rgba(34, 34, 34, 0.5);
+}
+
+.zero {
+  grid-column: span 2;
+  border-radius: 27px;
+  background: linear-gradient(10deg, #9D9192, #222);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 21px;
+}
+
+.clear, .back, .percent, .devide, .multiply, .minus, .plus, .equals {
+  border: 2px solid #C2C0C2;
+  background: linear-gradient(45deg, #ECEAEB, #AAA);
+  box-shadow: -5px 5px 10px rgba(34, 34, 34, 0.6);
+  color: rgba(38, 36, 37, 0.6);
+}
+
+.back {
+  font-size: 24px;
+}
+
+.multiply {
+  font-size: 12px;
+}
+
+.minus {
+  font-size: 18px;
+}
+
+.plus {
+  font-size: 14px;
+}
+
+.line {
+  width: 35%;
+  height: 5px;
+  border-radius: 10px;
+  background-color: #ECEAEB;
+  position: absolute;
+  bottom: 24px;
+}
