@@ -7,28 +7,33 @@ class Calculator {
 		this.resultElement = document.querySelector('.result');
 		this.btnElements = document.querySelectorAll('.btn');
 		this.textviewElement = document.querySelector('.textview');
+		this.clickSound = new Audio('../audio/click.mp3');
 		this.events();
 	}
 
 	events() {
 		this.initializeAppearance();
-    
+
 		// for (let i = 0; i < this.btnElements.length; i++) {
 		// 	this.btnElements[i].addEventListener('click', (e) => {
 		// 		this.runButtonFunctions(e);
 		// 	});
 		// }
-		this.btnElements.forEach(el => {
-      el.addEventListener('click', e => {
-        this.runButtonFunctions(e);
-      })
-    })
+		this.btnElements.forEach((el) => {
+			el.addEventListener('mousedown', () => {
+				this.playSound();
+			});
+
+			el.addEventListener('click', (e) => {
+				this.runButtonFunctions(e);
+			});
+		});
 	}
 
 	initializeAppearance() {
 		this.inputElement.textContent = '';
-    this.resultElement.textContent = '0';
-    this.fontSizeAdjust();
+		this.resultElement.textContent = '0';
+		this.fontSizeAdjust();
 	}
 
 	runButtonFunctions(e) {
@@ -59,12 +64,7 @@ class Calculator {
 
 		const lastChar = this.inputArray[this.inputArray.length - 1];
 
-		if (
-			lastChar === ' ÷ ' ||
-			lastChar === ' X ' ||
-			lastChar === ' – ' ||
-			lastChar === ' ＋ ' ||
-			lastChar === '.') {
+		if (lastChar === ' ÷ ' || lastChar === ' X ' || lastChar === ' – ' || lastChar === ' ＋ ' || lastChar === '.') {
 			if (
 				e.target.textContent === '%' ||
 				e.target.textContent === '÷' ||
@@ -138,12 +138,7 @@ class Calculator {
 
 	showInput(text) {
 		this.inputArray.push(
-			text
-				.replace('O', '0')
-				.replace('÷', ' ÷ ')
-				.replace('✕', ' X ')
-				.replace('–', ' – ')
-				.replace('＋', ' ＋ ') // 因按下任何按鍵就 push 文字到陣列中，所以使用單次替換即可
+			text.replace('O', '0').replace('÷', ' ÷ ').replace('✕', ' X ').replace('–', ' – ').replace('＋', ' ＋ ') // 因按下任何按鍵就 push 文字到陣列中，所以使用單次替換即可
 		);
 
 		this.inputElement.textContent = this.inputArray.join('');
@@ -174,6 +169,7 @@ class Calculator {
 				return $1 + ',';
 			})
 			.replace(/\.$/, '');
+		// return (num).toLocaleString('en-US'); // 導致小數點後只被保留三位
 	}
 
 	fontSizeAdjust() {
@@ -196,6 +192,11 @@ class Calculator {
 			this.resultElement.classList.remove('smallText');
 			this.resultElement.classList.remove('verySmallText');
 		}
+	}
+
+	playSound() {
+		this.clickSound.currentTime = 0;
+		this.clickSound.play();
 	}
 }
 
