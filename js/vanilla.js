@@ -22,9 +22,15 @@ class Calculator {
 		// 	});
 		// }
 		this.btnElements.forEach((el) => {
-			el.addEventListener('mousedown', () => {
-				this.playSound();
-			});
+			if (document.body.clientWidth <= 1024) {
+				el.addEventListener('touchstart', () => {
+					this.playSound();
+				});
+			} else {
+				el.addEventListener('mousedown', () => {
+					this.playSound();
+				});
+			}
 
 			el.addEventListener('click', (e) => {
 				this.runButtonFunctions(e);
