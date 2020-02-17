@@ -14,6 +14,11 @@ class Calculator {
 	}
 
 	events() {
+		// Remove address bar in mobile browser
+		setTimeout(() => {
+			window.scrollTo(0, 1)
+		}, 100);
+
 		this.initializeAppearance();
 
 		// for (let i = 0; i < this.btnElements.length; i++) {
