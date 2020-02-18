@@ -25,7 +25,7 @@ class Calculator {
 			if (document.body.clientWidth <= 1024) {
 				el.addEventListener('touchstart', () => {
 					this.playSound();
-				});
+				}, {passive: true}); // Make event listeners passive to improve scrolling performance
 			} else {
 				el.addEventListener('mousedown', () => {
 					this.playSound();
