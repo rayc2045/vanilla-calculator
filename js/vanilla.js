@@ -45,6 +45,8 @@ class Calculator {
 	}
 
 	runButtonFunctions(e) {
+		if (this.textviewElement.classList.contains('allclear')) return; // Cannot input number when clearing
+
 		// console.log(e.target.textContent);
 		if (this.inputArray.length === 0) {
 			if (
