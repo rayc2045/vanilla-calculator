@@ -110,7 +110,7 @@ class Calculator {
 			this.inputArray = [];
 			this.initializeAppearance();
 			this.textviewElement.classList.remove('allclear');
-		}, 1000);
+		}, 700);
 	}
 
 	backOne() {
