@@ -14,6 +14,10 @@ class Calculator {
 	}
 
 	events() {
+		document.onselectstart = () => {return false;}
+		document.ondragstart = () => {return false;}
+		document.oncontextmenu = () => {return false;}
+
 		this.initializeAppearance();
 
 		// for (let i = 0; i < this.btnElements.length; i++) {
@@ -74,7 +78,11 @@ class Calculator {
 
 		const lastChar = this.inputArray[this.inputArray.length - 1];
 
-		if (lastChar === ' ÷ ' || lastChar === ' X ' || lastChar === ' – ' || lastChar === ' ＋ ' || lastChar === '.') {
+		if (lastChar === ' ÷ ' ||
+				lastChar === ' X ' ||
+				lastChar === ' – ' ||
+				lastChar === ' ＋ ' ||
+				lastChar === '.') {
 			if (
 				e.target.textContent === '%' ||
 				e.target.textContent === '÷' ||
