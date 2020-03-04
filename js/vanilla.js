@@ -51,7 +51,6 @@ class Calculator {
 	runButtonFunctions(e) {
 		if (this.textviewElement.classList.contains('allclear')) return; // Cannot input number when clearing
 
-		// console.log(e.target.textContent);
 		if (this.inputArray.length === 0) {
 			if (
 				e.target.textContent === 'C' ||
@@ -77,9 +76,33 @@ class Calculator {
 		if (e.target.textContent === '=') return this.equals();
 
 		const lastChar = this.inputArray[this.inputArray.length - 1];
+		const lastSecondChar = this.inputArray[this.inputArray.length - 2];
+		const lastThirdChar = this.inputArray[this.inputArray.length - 3];
+
+		if (lastChar === ' X ' && lastSecondChar === ' X ') {
+			if (
+				e.target.textContent === '%' ||
+				e.target.textContent === '÷' ||
+				e.target.textContent === '✕' ||
+				e.target.textContent === '–' ||
+				e.target.textContent === '＋' ||
+				e.target.textContent === '.'
+			)
+				this.inputArray.length -= 2;
+		}
+		
+		if (lastChar === ' X ' && lastSecondChar !== ' X ') {
+			if (
+				e.target.textContent === '%' ||
+				e.target.textContent === '÷' ||
+				e.target.textContent === '–' ||
+				e.target.textContent === '＋' ||
+				e.target.textContent === '.'
+			)
+			this.inputArray.length -= 1;
+		}
 
 		if (lastChar === ' ÷ ' ||
-				lastChar === ' X ' ||
 				lastChar === ' – ' ||
 				lastChar === ' ＋ ' ||
 				lastChar === '.') {
@@ -124,6 +147,9 @@ class Calculator {
 	}
 
 	backOne() {
+		const lastSecondChar = this.inputArray[this.inputArray.length - 2];
+		const lastThirdChar = this.inputArray[this.inputArray.length - 3];
+
 		if (this.inputArray.length === 0) {
 			return;
 		} else if (this.inputArray.length === 1) {
@@ -131,6 +157,18 @@ class Calculator {
 			this.inputElement.textContent = '';
 			this.resultElement.textContent = '0';
 		} else {
+			if (lastSecondChar === ' X ' && lastThirdChar === ' X ') {
+				this.inputArray.length -= 2;
+				if (this.inputArray.length < 4) this.inputArray.push(0);
+			} else if (
+				lastSecondChar === ' ÷ ' ||
+				lastSecondChar === ' X ' ||
+				lastSecondChar === ' – ' ||
+				lastSecondChar === ' ＋ ' ||
+				lastSecondChar === '.'
+			) {
+				this.inputArray.length -= 1;
+			}
 			this.inputArray.length -= 1; // inputArray.splice(-1, 1)
 			this.inputElement.textContent = this.inputArray.join('');
 			this.showResult();
@@ -167,6 +205,7 @@ class Calculator {
 			.join('')
 			.replace(/÷/g, '/')
 			.replace(/X/g, '*')
+			.replace(/XX/g, '**')
 			.replace(/–/g, '-')
 			.replace(/＋/g, '+')
 			.replace(/%/g, '* 0.01')
