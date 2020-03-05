@@ -76,8 +76,8 @@ class Calculator {
 		if (e.target.textContent === '☞') return this.clearOne();
 		if (e.target.textContent === '=') return this.equals();
 		
-		this.preventZeroBug(e);
-		this.replaceOldOperator(e);
+		this.preventNumberStartWithZero(e);
+		this.replacePreviousOperator(e);
 		this.showInput(e.target.textContent);
 		try {
 			this.showResult();
@@ -87,7 +87,7 @@ class Calculator {
 		this.fontSizeAdjust();
 	}
 
-	preventZeroBug(e) {
+	preventNumberStartWithZero(e) {
 		const lastChar = this.inputArray[this.inputArray.length - 1];
 		const lastSecondChar = this.inputArray[this.inputArray.length - 2];
 		
@@ -115,7 +115,7 @@ class Calculator {
 		}
 	}
 
-	replaceOldOperator(e) {
+	replacePreviousOperator(e) {
 		const lastChar = this.inputArray[this.inputArray.length - 1];
 
 		if (
