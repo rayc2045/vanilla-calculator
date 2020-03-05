@@ -51,6 +51,7 @@ class Calculator {
 	runButtonFunctions(e) {
 		if (this.textviewElement.classList.contains('allclear')) return; // Cannot input number when clearing
 
+		// console.log(e.target.textContent);
 		if (this.inputArray.length === 0) {
 			if (
 				e.target.textContent === 'C' ||
@@ -68,71 +69,49 @@ class Calculator {
 				e.target.textContent === '＋' ||
 				e.target.textContent === '.'
 			)
-				this.inputArray.push(0);
+				this.inputArray.push('0');
 		}
 
 		if (e.target.textContent === 'C') return this.clearAll();
-		if (e.target.textContent === '☞') return this.backOne();
+		if (e.target.textContent === '☞') return this.clearOne();
 		if (e.target.textContent === '=') return this.equals();
-
-		const lastChar = this.inputArray[this.inputArray.length - 1];
-		const lastSecondChar = this.inputArray[this.inputArray.length - 2];
-		const lastThirdChar = this.inputArray[this.inputArray.length - 3];
-
-		if (lastChar === ' X ' && lastSecondChar === ' X ') {
-			if (
-				e.target.textContent === '%' ||
-				e.target.textContent === '÷' ||
-				e.target.textContent === '✕' ||
-				e.target.textContent === '–' ||
-				e.target.textContent === '＋' ||
-				e.target.textContent === '.'
-			)
-				this.inputArray.length -= 2;
-		}
 		
-		if (lastChar === ' X ' && lastSecondChar !== ' X ') {
-			if (
-				e.target.textContent === '%' ||
-				e.target.textContent === '÷' ||
-				e.target.textContent === '–' ||
-				e.target.textContent === '＋' ||
-				e.target.textContent === '.'
-			)
-			this.inputArray.length -= 1;
-		}
-
-		if (lastChar === ' ÷ ' ||
-				lastChar === ' – ' ||
-				lastChar === ' ＋ ' ||
-				lastChar === '.') {
-			if (
-				e.target.textContent === '%' ||
-				e.target.textContent === '÷' ||
-				e.target.textContent === '✕' ||
-				e.target.textContent === '–' ||
-				e.target.textContent === '＋' ||
-				e.target.textContent === '.'
-			)
-				this.inputArray.length -= 1;
-
-			// slice() 不改變原陣列
-			// this.inputArray = this.inputArray.slice(0, this.inputArray.length - 1)
-
-			// splice() 改變原陣列
-			// this.inputArray.splice(-1, 1)
-		}
-		// console.log(this.inputArray[this.inputArray.length - 1])
-
+		this.replaceOldOperator(e)
 		this.showInput(e.target.textContent);
-
 		try {
 			this.showResult();
 		} catch (err) {
-			console.log(err + ':\n使用 eval() 計算時，當算式最後為加減乘除，報錯。');
+			console.log(err + ':\n使用 eval() 計算時，算式最後為加減乘除會報錯。');
+		}
+		this.fontSizeAdjust();
+	}
+
+	replaceOldOperator(e) {
+		const lastChar = this.inputArray[this.inputArray.length - 1];
+
+		if (
+			lastChar === ' ÷ ' ||
+			lastChar === ' X ' ||
+			lastChar === ' – ' ||
+			lastChar === ' ＋ ' ||
+			lastChar === '.'
+		) {
+			if (
+				e.target.textContent === '%' ||
+				e.target.textContent === '÷' ||
+				e.target.textContent === '✕' ||
+				e.target.textContent === '–' ||
+				e.target.textContent === '＋' ||
+				e.target.textContent === '.'
+			) {
+				this.inputArray.length -= 1;
+			}
 		}
 
-		this.fontSizeAdjust();
+		// slice() 不改變原陣列
+		// this.inputArray = this.inputArray.slice(0, this.inputArray.length - 1)
+		// splice() 改變原陣列
+		// this.inputArray.splice(-1, 1)
 	}
 
 	clearAll() {
@@ -146,10 +125,7 @@ class Calculator {
 		}, 700);
 	}
 
-	backOne() {
-		const lastSecondChar = this.inputArray[this.inputArray.length - 2];
-		const lastThirdChar = this.inputArray[this.inputArray.length - 3];
-
+	clearOne() {
 		if (this.inputArray.length === 0) {
 			return;
 		} else if (this.inputArray.length === 1) {
@@ -157,18 +133,6 @@ class Calculator {
 			this.inputElement.textContent = '';
 			this.resultElement.textContent = '0';
 		} else {
-			if (lastSecondChar === ' X ' && lastThirdChar === ' X ') {
-				this.inputArray.length -= 2;
-				if (this.inputArray.length < 4) this.inputArray.push(0);
-			} else if (
-				lastSecondChar === ' ÷ ' ||
-				lastSecondChar === ' X ' ||
-				lastSecondChar === ' – ' ||
-				lastSecondChar === ' ＋ ' ||
-				lastSecondChar === '.'
-			) {
-				this.inputArray.length -= 1;
-			}
 			this.inputArray.length -= 1; // inputArray.splice(-1, 1)
 			this.inputElement.textContent = this.inputArray.join('');
 			this.showResult();
@@ -194,7 +158,12 @@ class Calculator {
 
 	showInput(text) {
 		this.inputArray.push(
-			text.replace('O', '0').replace('÷', ' ÷ ').replace('✕', ' X ').replace('–', ' – ').replace('＋', ' ＋ ') // 因按下任何按鍵就 push 文字到陣列中，所以使用單次替換即可
+			text
+				.replace('O', '0')
+				.replace('÷', ' ÷ ')
+				.replace('✕', ' X ')
+				.replace('–', ' – ')
+				.replace('＋', ' ＋ ') // 因按下任何按鍵就 push 文字到陣列中，所以使用單次替換即可
 		);
 
 		this.inputElement.textContent = this.inputArray.join('');
@@ -205,7 +174,6 @@ class Calculator {
 			.join('')
 			.replace(/÷/g, '/')
 			.replace(/X/g, '*')
-			.replace(/XX/g, '**')
 			.replace(/–/g, '-')
 			.replace(/＋/g, '+')
 			.replace(/%/g, '* 0.01')
