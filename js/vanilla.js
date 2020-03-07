@@ -20,11 +20,6 @@ class Calculator {
 
 		this.initializeAppearance();
 
-		// for (let i = 0; i < this.btnElements.length; i++) {
-		// 	this.btnElements[i].addEventListener('click', (e) => {
-		// 		this.runButtonFunctions(e);
-		// 	});
-		// }
 		this.btnElements.forEach((el) => {
 			if (document.body.clientWidth <= 1024) {
 				el.addEventListener('touchstart', () => {
@@ -35,6 +30,11 @@ class Calculator {
 					this.playSound();
 				});
 			}
+		// for (let i = 0; i < this.btnElements.length; i++) {
+		// 	this.btnElements[i].addEventListener('click', (e) => {
+		// 		this.runButtonFunctions(e);
+		// 	});
+		// }
 
 			el.addEventListener('click', (e) => {
 				this.runButtonFunctions(e);
@@ -76,8 +76,8 @@ class Calculator {
 		if (e.target.textContent === '☞') return this.clearOne();
 		if (e.target.textContent === '=') return this.equals();
 		
-		this.preventNumberStartWithZero(e);
 		this.replacePreviousOperator(e);
+		this.preventNumberStartWithZero(e);
 		this.showInput(e.target.textContent);
 		try {
 			this.showResult();
@@ -85,6 +85,33 @@ class Calculator {
 			console.log(err + ':\n使用 eval() 計算時，算式最後為加減乘除會報錯。');
 		}
 		this.fontSizeAdjust();
+	}
+
+	replacePreviousOperator(e) {
+		const lastChar = this.inputArray[this.inputArray.length - 1];
+
+		if (
+			e.target.textContent === '%' ||
+			e.target.textContent === '÷' ||
+			e.target.textContent === '✕' ||
+			e.target.textContent === '–' ||
+			e.target.textContent === '＋' ||
+			e.target.textContent === '.'
+		) {
+			if (
+				lastChar === ' ÷ ' ||
+				lastChar === ' X ' ||
+				lastChar === ' – ' ||
+				lastChar === ' ＋ ' ||
+				lastChar === '.'
+			)
+				this.inputArray.length -= 1;
+		}
+
+		// slice() 不改變原陣列
+		// this.inputArray = this.inputArray.slice(0, this.inputArray.length - 1)
+		// splice() 改變原陣列
+		// this.inputArray.splice(-1, 1)
 	}
 
 	preventNumberStartWithZero(e) {
@@ -113,34 +140,6 @@ class Calculator {
 			)
 				this.inputArray.length -= 1;
 		}
-	}
-
-	replacePreviousOperator(e) {
-		const lastChar = this.inputArray[this.inputArray.length - 1];
-
-		if (
-			lastChar === ' ÷ ' ||
-			lastChar === ' X ' ||
-			lastChar === ' – ' ||
-			lastChar === ' ＋ ' ||
-			lastChar === '.'
-		) {
-			if (
-				e.target.textContent === '%' ||
-				e.target.textContent === '÷' ||
-				e.target.textContent === '✕' ||
-				e.target.textContent === '–' ||
-				e.target.textContent === '＋' ||
-				e.target.textContent === '.'
-			) {
-				this.inputArray.length -= 1;
-			}
-		}
-
-		// slice() 不改變原陣列
-		// this.inputArray = this.inputArray.slice(0, this.inputArray.length - 1)
-		// splice() 改變原陣列
-		// this.inputArray.splice(-1, 1)
 	}
 
 	clearAll() {
