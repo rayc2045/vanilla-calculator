@@ -3,6 +3,7 @@
 class Calculator {
 	constructor() {
 		this.inputArray = [];
+		this.tempOperator
 		this.inputElement = document.querySelector('.input');
 		this.resultElement = document.querySelector('.result');
 		this.btnElements = document.querySelectorAll('.btn');
@@ -162,11 +163,36 @@ class Calculator {
 			this.resultElement.textContent = '0';
 		} else {
 			this.inputArray.length -= 1; // inputArray.splice(-1, 1)
+			this.evalCalculationCorrect();
 			this.inputElement.textContent = this.inputArray.join('');
 			this.showResult();
+			this.recoveryDeletedOperator();
 		}
 
 		this.fontSizeAdjust();
+	}
+
+	evalCalculationCorrect() {
+		const lastChar = this.inputArray[this.inputArray.length - 1];
+
+		if (
+			lastChar === ' ÷ ' ||
+			lastChar === ' X ' ||
+			lastChar === ' – ' ||
+			lastChar === ' ＋ ' ||
+			lastChar === '.'
+		) {
+			this.tempOperator = lastChar;
+			this.inputArray.length -= 1;
+		}
+	}
+
+	recoveryDeletedOperator() {
+		if (this.tempOperator.length) {
+			this.inputArray.push(this.tempOperator);
+			this.inputElement.textContent = this.inputArray.join('');
+			this.tempOperator = '';
+		}
 	}
 
 	equals() {
