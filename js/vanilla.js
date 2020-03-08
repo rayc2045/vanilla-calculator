@@ -3,7 +3,7 @@
 class Calculator {
 	constructor() {
 		this.inputArray = [];
-		this.tempOperator
+		this.tempOperator = '';
 		this.inputElement = document.querySelector('.input');
 		this.resultElement = document.querySelector('.result');
 		this.btnElements = document.querySelectorAll('.btn');
@@ -89,7 +89,7 @@ class Calculator {
 	}
 
 	replacePreviousOperator(e) {
-		const lastChar = this.inputArray[this.inputArray.length - 1];
+		const lastItem = this.inputArray[this.inputArray.length - 1];
 
 		if (
 			e.target.textContent === '%' ||
@@ -100,11 +100,11 @@ class Calculator {
 			e.target.textContent === '.'
 		) {
 			if (
-				lastChar === ' ÷ ' ||
-				lastChar === ' X ' ||
-				lastChar === ' – ' ||
-				lastChar === ' ＋ ' ||
-				lastChar === '.'
+				lastItem === ' ÷ ' ||
+				lastItem === ' X ' ||
+				lastItem === ' – ' ||
+				lastItem === ' ＋ ' ||
+				lastItem === '.'
 			)
 				this.inputArray.length -= 1;
 		}
@@ -116,8 +116,8 @@ class Calculator {
 	}
 
 	preventNumberStartWithZero(e) {
-		const lastChar = this.inputArray[this.inputArray.length - 1];
-		const lastSecondChar = this.inputArray[this.inputArray.length - 2];
+		const lastItem = this.inputArray[this.inputArray.length - 1];
+		const lastSecondItem = this.inputArray[this.inputArray.length - 2];
 		
 		// Example: 9 X 0(2)
 		if (
@@ -133,11 +133,11 @@ class Calculator {
 			e.target.textContent === '9'
 		) {
 			if (
-				(lastChar === '0' && lastSecondChar === ' ÷ ') ||
-				(lastChar === '0' && lastSecondChar === ' X ') ||
-				(lastChar === '0' && lastSecondChar === ' – ') ||
-				(lastChar === '0' && lastSecondChar === ' ＋ ') ||
-				(lastChar === '0' && lastSecondChar === '%')
+				(lastItem === '0' && lastSecondItem === ' ÷ ') ||
+				(lastItem === '0' && lastSecondItem === ' X ') ||
+				(lastItem === '0' && lastSecondItem === ' – ') ||
+				(lastItem === '0' && lastSecondItem === ' ＋ ') ||
+				(lastItem === '0' && lastSecondItem === '%')
 			)
 				this.inputArray.length -= 1;
 		}
@@ -157,32 +157,35 @@ class Calculator {
 	clearOne() {
 		if (this.inputArray.length === 0) {
 			return;
-		} else if (this.inputArray.length === 1) {
+		}
+		
+		if (this.inputArray.length === 1) {
 			this.inputArray = [];
 			this.inputElement.textContent = '';
 			this.resultElement.textContent = '0';
-		} else {
-			this.inputArray.length -= 1; // inputArray.splice(-1, 1)
-			this.evalCalculationCorrect();
-			this.inputElement.textContent = this.inputArray.join('');
-			this.showResult();
-			this.recoveryDeletedOperator();
+			this.fontSizeAdjust();
+			return;
 		}
 
+		this.inputArray.length -= 1;
+		this.evalCalculationCorrect();
+		this.inputElement.textContent = this.inputArray.join('');
+		this.showResult();
+		this.recoveryDeletedOperator();
 		this.fontSizeAdjust();
 	}
 
 	evalCalculationCorrect() {
-		const lastChar = this.inputArray[this.inputArray.length - 1];
+		const lastItem = this.inputArray[this.inputArray.length - 1];
 
 		if (
-			lastChar === ' ÷ ' ||
-			lastChar === ' X ' ||
-			lastChar === ' – ' ||
-			lastChar === ' ＋ ' ||
-			lastChar === '.'
+			lastItem === ' ÷ ' ||
+			lastItem === ' X ' ||
+			lastItem === ' – ' ||
+			lastItem === ' ＋ ' ||
+			lastItem === '.'
 		) {
-			this.tempOperator = lastChar;
+			this.tempOperator = lastItem;
 			this.inputArray.length -= 1;
 		}
 	}
