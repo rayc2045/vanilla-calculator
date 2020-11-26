@@ -11,4 +11,4 @@
 - 使用 CSS animation 做出流暢的清除動畫
 - 透過 JS 讓重複輸入的運算符只顯示並計算最後一位，減少誤按導致計算錯誤的問題
 - 使用 `Math.round` 確保計算精度，並在結算時自動四捨五入到小數第三位，方便觀看計算結果
-- [線上版](https://raychang2017.github.io/elegant-vanilla-js-calculator/) / [CodePen 連結](https://codepen.io/raychang2017/full/jgLppK)
+- [線上版](https://rayc2045.github.io/vanilla-calculator/) / [CodePen 連結](https://codepen.io/rayc2045/full/jgLppK)
