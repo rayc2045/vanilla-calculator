@@ -1,15 +1,5 @@
 'use strict';
 
-document.onselectstart = () => {
-  return false;
-};
-document.ondragstart = () => {
-  return false;
-};
-document.oncontextmenu = () => {
-  return false;
-};
-
 class Calculator {
   constructor() {
     this.inputArray = [];
@@ -273,3 +263,7 @@ class Calculator {
 }
 
 new Calculator();
+
+document.onselectstart = () => false;
+document.ondragstart = () => false;
+document.oncontextmenu = () => false;
