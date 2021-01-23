@@ -4,10 +4,10 @@ class Calculator {
   constructor() {
     this.inputArray = [];
     this.tempOperator = '';
-    this.inputElement = document.querySelector('.input');
-    this.resultElement = document.querySelector('.result');
-    this.btnElements = document.querySelectorAll('.btn');
-    this.textviewElement = document.querySelector('.textview');
+    this.inputEl = document.querySelector('.input');
+    this.resultEl = document.querySelector('.result');
+    this.buttonsEl = document.querySelector('.btns');
+    this.textviewEl = document.querySelector('.textview');
     this.clickSound = new Audio('https://raw.githubusercontent.com/rayc2045/vanilla-calculator/master/audio/click.mp3');
     this.events();
   }
@@ -15,23 +15,22 @@ class Calculator {
   events() {
     this.initializeAppearance();
 
-    this.btnElements.forEach((el) => {
-      el.addEventListener('click', (e) => this.runButtonFunctions(e));
-
-      document.body.clientWidth <= 1024
-        ? el.addEventListener('touchstart', () => this.playSound())
-        : el.addEventListener('mousedown', () => this.playSound());
-    });
+    this.buttonsEl.onmousedown = (e) => {
+      if (e.target.classList.contains('btn')) {
+        this.runButtonFunctions(e);
+        this.playSound(this.clickSound);
+      }
+    }
   }
 
   initializeAppearance() {
-    this.inputElement.textContent = '';
-    this.resultElement.textContent = '0';
+    this.inputEl.textContent = '';
+    this.resultEl.textContent = '0';
     this.fontSizeAdjust();
   }
 
   runButtonFunctions(e) {
-    if (this.textviewElement.classList.contains('allclear')) return;
+    if (this.textviewEl.classList.contains('allclear')) return;
 
     // console.log(e.target.textContent);
     if (this.inputArray.length === 0) {
@@ -123,12 +122,12 @@ class Calculator {
 
   clearAll() {
     // inputArray = []; // 一開始就清除會讓計算結果出現 NaN，在清除動畫運行時再偷偷清空
-    this.textviewElement.classList.add('allclear');
+    this.textviewEl.classList.add('allclear');
 
     setTimeout(() => {
       this.inputArray = [];
       this.initializeAppearance();
-      this.textviewElement.classList.remove('allclear');
+      this.textviewEl.classList.remove('allclear');
     }, 700);
   }
 
@@ -139,15 +138,15 @@ class Calculator {
 
     if (this.inputArray.length === 1) {
       this.inputArray = [];
-      this.inputElement.textContent = '';
-      this.resultElement.textContent = '0';
+      this.inputEl.textContent = '';
+      this.resultEl.textContent = '0';
       this.fontSizeAdjust();
       return;
     }
 
     this.inputArray.length--;
     this.evalCalculationCorrect();
-    this.inputElement.textContent = this.inputArray.join('');
+    this.inputEl.textContent = this.inputArray.join('');
     this.showResult();
     this.recoveryDeletedOperator();
     this.fontSizeAdjust();
@@ -171,19 +170,19 @@ class Calculator {
   recoveryDeletedOperator() {
     if (this.tempOperator.length) {
       this.inputArray.push(this.tempOperator);
-      this.inputElement.textContent = this.inputArray.join('');
+      this.inputEl.textContent = this.inputArray.join('');
       this.tempOperator = '';
     }
   }
 
   equals() {
-    this.inputElement.textContent = '';
+    this.inputEl.textContent = '';
 
-    if (this.resultElement.textContent === '0') {
+    if (this.resultEl.textContent === '0') {
       this.inputArray = [];
     } else {
       // 將計算結果拆掉千分位並只保留三位小數點，再更新 inputArray 輸出結果
-      const numWithThreeFloat = Math.round(this.resultElement.textContent.replace(/,/g, '') * 1e3) / 1e3;
+      const numWithThreeFloat = Math.round(this.resultEl.textContent.replace(/,/g, '') * 1e3) / 1e3;
 
       this.inputArray = numWithThreeFloat.toString().split(''); // String.split('') => Array
       this.showResult();
@@ -201,7 +200,7 @@ class Calculator {
         .replace('＋', ' ＋ ') // 因按下任何按鍵就 push 文字到陣列中，所以使用單次替換即可
     );
 
-    this.inputElement.textContent = this.inputArray.join('');
+    this.inputEl.textContent = this.inputArray.join('');
   }
 
   showResult() {
@@ -218,7 +217,7 @@ class Calculator {
     // 小數點留到第 12 位以確保計算準確，可輸入 0.1 + 0.2 測試（不精確計算 https://zh.javascript.info/number#bu-jing-que-ji-suan）
     // const resultNumber = +eval(calculatableString).toFixed(12); // 相較於 Math.round()，toFixed() 存在精度缺失（https://zh.javascript.info/number#wei-shi-mo-6-35tofixed-1-6-3）；此外 toFixed() 會將資料轉成字串，如果不再轉為數字，將產生 .000000000000
 
-    this.resultElement.textContent = this.thousandFormat(resultNumber);
+    this.resultEl.textContent = this.thousandFormat(resultNumber);
   }
 
   thousandFormat(num) {
@@ -228,41 +227,41 @@ class Calculator {
   }
 
   fontSizeAdjust() {
-    const resultLength = this.resultElement.textContent.length;
+    const resultLength = this.resultEl.textContent.length;
 
     if (resultLength > 15) {
-      this.resultElement.classList.remove('mediumText');
-      this.resultElement.classList.remove('smallText');
-      this.resultElement.classList.add('verySmallText');
+      this.resultEl.classList.remove('mediumText');
+      this.resultEl.classList.remove('smallText');
+      this.resultEl.classList.add('verySmallText');
       return;
     }
 
     if (resultLength > 11) {
-      this.resultElement.classList.remove('mediumText');
-      this.resultElement.classList.add('smallText');
-      this.resultElement.classList.remove('verySmallText');
+      this.resultEl.classList.remove('mediumText');
+      this.resultEl.classList.add('smallText');
+      this.resultEl.classList.remove('verySmallText');
       return;
     }
 
     if (resultLength > 7) {
-      this.resultElement.classList.add('mediumText');
-      this.resultElement.classList.remove('smallText');
-      this.resultElement.classList.remove('verySmallText');
+      this.resultEl.classList.add('mediumText');
+      this.resultEl.classList.remove('smallText');
+      this.resultEl.classList.remove('verySmallText');
       return;
     }
 
-    this.resultElement.classList.remove('mediumText');
-    this.resultElement.classList.remove('smallText');
-    this.resultElement.classList.remove('verySmallText');
+    this.resultEl.classList.remove('mediumText');
+    this.resultEl.classList.remove('smallText');
+    this.resultEl.classList.remove('verySmallText');
   }
 
-  playSound() {
-    this.clickSound.currentTime = 0;
-    this.clickSound.play();
+  playSound(audio) {
+    audio.currentTime = 0;
+    audio.play();
   }
 }
 
-new Calculator();
+const app = new Calculator();
 
 document.onselectstart = () => false;
 document.ondragstart = () => false;
