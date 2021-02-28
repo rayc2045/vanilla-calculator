@@ -17,8 +17,8 @@ class Calculator {
 
     this.buttonsEl.onmousedown = (e) => {
       if (e.target.classList.contains('btn')) {
-        this.runButtonFunctions(e);
         this.playSound(this.clickSound);
+        this.runButtonFunctions(e);
       }
     }
   }
@@ -33,7 +33,7 @@ class Calculator {
     if (this.textviewEl.classList.contains('allclear')) return;
 
     // console.log(e.target.textContent);
-    if (this.inputArray.length === 0) {
+    if (!this.inputArray.length) {
       if (
         e.target.textContent === 'C' ||
         e.target.textContent === '☞' ||
@@ -56,8 +56,9 @@ class Calculator {
     if (e.target.textContent === 'C') return this.clearAll();
     if (e.target.textContent === '☞') return this.clearOne();
     if (e.target.textContent === '=') return this.equals();
-
+    
     this.replacePreviousOperator(e);
+    if (e.target.textContent === '.' && this.isLastNumberIncludesDecimalPoint()) return;
     this.preventNumberStartWithZero(e);
     this.showInput(e.target.textContent);
     try {
@@ -78,6 +79,7 @@ class Calculator {
       e.target.textContent === '.'
     ) {
       if (
+        lastItem === '%' ||
         lastItem === ' ÷ ' ||
         lastItem === ' X ' ||
         lastItem === ' – ' ||
@@ -120,6 +122,39 @@ class Calculator {
     }
   }
 
+  isLastNumberIncludesDecimalPoint() {
+    const str = this.inputArray.join('').replace(/ /g, '');
+    console.log(str);
+
+    // FIXME: 3.3.3.
+    // if (
+    //   !str.includes('÷') ||
+    //   !str.includes('X') ||
+    //   !str.includes('–') ||
+    //   !str.includes('＋')
+    // ) {
+    //   console.log('no operator');
+    //   if (str.includes('.')) return true;
+    // }
+    
+    for (let i = 0; i < str.length; i++) {
+      if (
+        str[str.length - i] === '÷' ||
+        str[str.length - i] === 'X' ||
+        str[str.length - i] === '–' ||
+        str[str.length - i] === '＋' ||
+        str[str.length - i] === '%'
+      ) {
+        const lastOperator = str[str.length - i];
+        const splitArray = str.split(lastOperator);
+        // FIXME: 3.3%.
+
+        console.log(lastOperator);
+        return splitArray[splitArray.length - 1].includes('.');
+      }
+    }
+  }
+
   clearAll() {
     // inputArray = []; // 一開始就清除會讓計算結果出現 NaN，在清除動畫運行時再偷偷清空
     this.textviewEl.classList.add('allclear');
@@ -132,9 +167,7 @@ class Calculator {
   }
 
   clearOne() {
-    if (this.inputArray.length === 0) {
-      return;
-    }
+    if (!this.inputArray.length) return;
 
     if (this.inputArray.length === 1) {
       this.inputArray = [];
@@ -177,17 +210,12 @@ class Calculator {
 
   equals() {
     this.inputEl.textContent = '';
-
-    if (this.resultEl.textContent === '0') {
-      this.inputArray = [];
-    } else {
-      // 將計算結果拆掉千分位並只保留三位小數點，再更新 inputArray 輸出結果
-      const numWithThreeFloat = Math.round(this.resultEl.textContent.replace(/,/g, '') * 1e3) / 1e3;
-
-      this.inputArray = numWithThreeFloat.toString().split(''); // String.split('') => Array
-      this.showResult();
-      this.fontSizeAdjust();
-    }
+    if (this.resultEl.textContent === '0') return (this.inputArray = []);
+    // 將計算結果拆掉千分位並只保留三位小數點，再更新 inputArray 輸出結果
+    const numWithThreeFloat = Math.round(this.resultEl.textContent.replace(/,/g, '') * 1e3) / 1e3;
+    this.inputArray = numWithThreeFloat.toString().split('');
+    this.showResult();
+    this.fontSizeAdjust();
   }
 
   showInput(text) {
@@ -216,7 +244,6 @@ class Calculator {
     const resultNumber = Math.round(eval(calculatableString) * 1e12) / 1e12;
     // 小數點留到第 12 位以確保計算準確，可輸入 0.1 + 0.2 測試（不精確計算 https://zh.javascript.info/number#bu-jing-que-ji-suan）
     // const resultNumber = +eval(calculatableString).toFixed(12); // 相較於 Math.round()，toFixed() 存在精度缺失（https://zh.javascript.info/number#wei-shi-mo-6-35tofixed-1-6-3）；此外 toFixed() 會將資料轉成字串，如果不再轉為數字，將產生 .000000000000
-
     this.resultEl.textContent = this.thousandFormat(resultNumber);
   }
 
@@ -261,7 +288,7 @@ class Calculator {
   }
 }
 
-const app = new Calculator();
+new Calculator();
 
 document.onselectstart = () => false;
 document.ondragstart = () => false;
