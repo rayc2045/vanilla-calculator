@@ -1,6 +1,6 @@
 # Vanilla Calculator
 
-[![Photo](https://cdn.dribbble.com/users/3800131/screenshots/6901484/_____2019-08-02___4.01.34_4x.png)](https://dribbble.com/raychangdesign)
+![Photo](https://cdn.dribbble.com/users/3800131/screenshots/6901484/_____2019-08-02___4.01.34_4x.png)
 
 [> Vanilla Calculator](https://rayc2045.github.io/vanilla-calculator/)
 
