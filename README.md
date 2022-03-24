@@ -1,4 +1,4 @@
-# Vanilla Calculator
+# Vanilla Calculator｜立即顯示結果的優雅計算機
 
 ![Photo](https://cdn.dribbble.com/users/3800131/screenshots/6901484/_____2019-08-02___4.01.34_4x.png)
 
