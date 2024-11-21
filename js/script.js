@@ -8,7 +8,7 @@ class Calculator {
     this.resultEl = document.querySelector('.result');
     this.buttonsEl = document.querySelector('.btns');
     this.textviewEl = document.querySelector('.textview');
-    this.clickSound = new Audio('https://raw.githubusercontent.com/rayc2045/vanilla-calculator/master/audio/click.mp3');
+    this.clickSound = new Audio('/assets/audios/click.mp3');
     this.events();
   }
 
@@ -56,7 +56,7 @@ class Calculator {
     if (e.target.textContent === 'C') return this.clearAll();
     if (e.target.textContent === '☞') return this.clearOne();
     if (e.target.textContent === '=') return this.equals();
-    
+
     this.replacePreviousOperator(e);
     if (e.target.textContent === '.' && this.isLastNumberIncludesDecimalPoint()) return;
     this.preventNumberStartWithZero(e);
@@ -136,7 +136,7 @@ class Calculator {
     //   console.log('no operator');
     //   if (str.includes('.')) return true;
     // }
-    
+
     for (let i = 0; i < str.length; i++) {
       if (
         str[str.length - i] === '÷' ||
