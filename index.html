@@ -1,49 +1,78 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Elegant Vanilla JS Calculator</title>
-    <meta name="description" content="Absolutely the most elegant calculator you have seen.">
-    <meta name="keywords" content="calculator,計算機,javascript,js">
-    <meta name="author" content="Ray Chang">
-    <link rel="icon" href="https://avatars.githubusercontent.com/u/39514595?s=32">
-    <link rel="stylesheet" href="./css/font-face.css"/>
-    <link rel="stylesheet" href="./css/style.css"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- Primary Meta Tags -->
+    <link
+      rel="icon"
+      href="https://avatars.githubusercontent.com/u/39514595?s=32"
+    />
+    <title>Vanilla Calculator</title>
+    <meta name="title" content="Vanilla Calculator" />
+    <meta
+      name="description"
+      content="An elegant and minimalistic calculator built with vanilla JavaScript, delivering instant results with every input."
+    />
+    <meta
+      name="keywords"
+      content="calculator,ui-design,interactive,css-animations,web-app,vanilla-javascript,vanilla-js,css-grid,web-design,responsive-design,calculator-application,iphone-app,ux-design,calculator-javascript,javascript-calculator,css-flexbox,calculator-app,iphone-calculator,iphone-application,button-design"
+    />
+    <meta name="author" content="Ray C" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rayc2045.github.io/vanilla-calculator/" />
+    <meta property="og:title" content="Vanilla Calculator" />
+    <meta
+      property="og:description"
+      content="An elegant and minimalistic calculator built with vanilla JavaScript, delivering instant results with every input."
+    />
+    <meta property="og:image" content="/assets/images/cover.webp" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://rayc2045.github.io/vanilla-calculator/" />
+    <meta property="twitter:title" content="Vanilla Calculator" />
+    <meta
+      property="twitter:description"
+      content="An elegant and minimalistic calculator built with vanilla JavaScript, delivering instant results with every input."
+    />
+    <meta property="twitter:image" content="/assets/images/cover.webp" />
+    <!-- font: M PLUS 1P -->
+    <link rel="stylesheet" href="./src/font-face.css" />
+    <!-- styles -->
+    <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <div class="iphoneX">
-      <div class="top"></div>
-      <div class="app">
-        <div class="textview">
-          <div class="input">234 X 52</div>
-          <div class="result">12,168</div>
+    <div class="iphone-x">
+      <div class="view">
+        <div id="input">234 X 52</div>
+        <div id="result">12,168</div>
+      </div>
+      <div class="buttons-container">
+        <div class="light clear">C</div>
+        <div class="light delete">
+          <span>⌫</span>
         </div>
-        <div class="btns">
-          <div class="btn clear">C</div>
-          <div class="btn back">☞</div>
-          <div class="btn percent">%</div>
-          <div class="btn devide">÷</div>
-          <div class="btn">7</div>
-          <div class="btn">8</div>
-          <div class="btn">9</div>
-          <div class="btn multiply">✕</div>
-          <div class="btn">4</div>
-          <div class="btn">5</div>
-          <div class="btn">6</div>
-          <div class="btn minus">–</div>
-          <div class="btn">1</div>
-          <div class="btn">2</div>
-          <div class="btn">3</div>
-          <div class="btn plus">＋</div>
-          <div class="btn zero">O</div>
-          <div class="btn">.</div>
-          <div class="btn equals">=</div>
-        </div>
-        <div class="line"></div>
+        <div class="light percent">%</div>
+        <div class="light devide">÷</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+        <div class="light multiply">✕</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div class="light minus">–</div>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div class="light plus">＋</div>
+        <div class="zero">O</div>
+        <div>.</div>
+        <div class="light equals">=</div>
       </div>
     </div>
-    <script src="./js/script.js"></script>
+    <script src="./src/script.js"></script>
   </body>
 </html>

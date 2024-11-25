@@ -1,0 +1,231 @@
+:root {
+  --beige: #eceaeb;
+  --brown: #9d9192;
+  --dark-brown: #262425;
+  --light-gray: #c2c0c2;
+  --gray: #aaa;
+  --black: #222;
+
+  --gap-button: 9px;
+
+  --width-iphone: 286px;
+  --width-iphone-top: 150px;
+  --width-text-view: 218px;
+  --width-button: 54px;
+  --width-bottom-line: 35%;
+
+  --height-iphone: 600px;
+  --height-iphone-top: 20px;
+  --height-text-view: 96px;
+  --height-input: 20px;
+  --height-result: 74px;
+  --height-bottom-line: 5px;
+
+  --font-size-input: 14px;
+  --font-size-result-lg: 50px;
+  --font-size-result-md: 35px;
+  --font-size-result-sm: 25px;
+  --font-size-result-xs: 20px;
+  --font-size-delete-button: 16px;
+  --font-size-devide-button: 18px;
+  --font-size-multiply-button: 14px;
+  --font-size-minus-button: 20px;
+  --font-size-plus-button: 16px;
+  --font-size-equals-button: 18px;
+
+  --color-text-view: var(--beige);
+  --color-input: rgba(236, 234, 235, 0.5); /* --beige */
+  --color-dark-button: var(--beige);
+  --color-light-button: rgba(38, 36, 37, 0.6); /* --dark-brown */
+
+  --border-iphone: 10px solid var(--black);
+  --border-dark-button: 2px solid rgba(38, 36, 37, 0.7);
+  --border-light-button: 2px solid var(--light-gray);
+
+  --border-radius-iphone: 45px;
+  --border-radius-iphone-top: 0 0 15px 15px;
+  --border-radius-button: 50%;
+  --border-radius-zero-button: 27px;
+  --border-radius-bottom-line: 10px;
+
+  --shadow-iphone: -5px 15px 60px rgba(34, 34, 34, 0.7); /* --black */
+  --shadow-dark-button: -3px 3px 5px rgba(34, 34, 34, 0.8);
+  --shadow-light-button: -5px 5px 10px rgba(34, 34, 34, 0.6); /* 接近光的地方陰影較弱 */
+  --shadow-active-button: -3px 3px 5px rgba(34, 34, 34, 0.5);
+
+  --gradient-app: linear-gradient(40deg, var(--dark-brown), var(--brown));
+  --gradient-dark-button: linear-gradient(40deg, var(--brown), var(--black));
+  --gradient-light-button: linear-gradient(45deg, var(--beige), var(--gray));
+  --gradient-zero-button: linear-gradient(10deg, var(--brown), var(--black));
+
+  --duration: 0.8s;
+}
+
+@keyframes clear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+}
+
+.transparent {
+  opacity: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  outline: none;
+  appearance: none;
+  cursor: default;
+  user-select: none;
+}
+
+html {
+  font-family: "M PLUS 1p", sans-serif;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--light-gray);
+}
+
+.iphone-x {
+  position: relative;
+  min-width: var(--width-iphone);
+  height: var(--height-iphone);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: var(--border-iphone);
+  border-radius: var(--border-radius-iphone);
+  background: var(--gradient-app);
+  background-size: 100% 110%;
+  box-shadow: var(--shadow-iphone);
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: var(--width-iphone-top);
+    height: var(--height-iphone-top);
+    background-color: var(--black);
+    border-radius: var(--border-radius-iphone-top);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 24px;
+    width: var(--width-bottom-line);
+    height: var(--height-bottom-line);
+    border-radius: var(--border-radius-bottom-line);
+    background-color: var(--beige);
+  }
+  @media (width <= 400px) {
+    transform: scale(0.8);
+  }
+  > .view {
+    position: relative;
+    margin-top: -42px;
+    margin-bottom: 12px;
+    width: var(--width-text-view);
+    height: var(--height-text-view);
+    white-space: nowrap;
+    overflow: hidden;
+    will-change: transform;
+    color: var(--color-text-view);
+    > #input {
+      position: absolute;
+      right: 0;
+      top: 5px;
+      height: var(--height-input);
+      font-size: var(--font-size-input);
+      color: var(--color-input);
+      &.animate {
+        animation: clear var(--duration) forwards;
+      }
+    }
+    > #result {
+      position: absolute;
+      right: 0;
+      top: 15px;
+      height: var(--height-result);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: var(--font-size-result-lg);
+      &.animate {
+        animation: clear var(--duration) forwards;
+      }
+    }
+  }
+  > .buttons-container {
+    display: grid;
+    grid-template-columns: repeat(4, var(--width-button));
+    grid-template-rows: repeat(5, var(--width-button));
+    grid-gap: var(--gap-button);
+    > div {
+      grid-column: span 1;
+      grid-row: span 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: var(--border-dark-button);
+      border-radius: var(--border-radius-button);
+      color: var(--color-dark-button);
+      background: var(--gradient-dark-button);
+      box-shadow: var(--shadow-dark-button);
+      cursor: pointer;
+      &.light {
+        border: var(--border-light-button);
+        color: var(--color-light-button);
+        background: var(--gradient-light-button);
+        box-shadow: var(--shadow-light-button);
+      }
+      &.delete {
+        font-size: var(--font-size-delete-button);
+        > span {
+          pointer-events: none;
+        }
+      }
+      &.devide {
+        font-size: var(--font-size-devide-button);
+      }
+      &.multiply {
+        font-size: var(--font-size-multiply-button);
+      }
+      &.minus {
+        font-size: var(--font-size-minus-button);
+      }
+      &.plus {
+        font-size: var(--font-size-plus-button);
+      }
+      &.equals {
+        font-size: var(--font-size-equals-button);
+      }
+      &.zero {
+        grid-column: span 2;
+        padding-left: 20px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        border-radius: var(--border-radius-zero-button);
+        background: var(--gradient-zero-button);
+      }
+      &:active {
+        background-size: 120%;
+        box-shadow: var(--shadow-active-button);
+      }
+    }
+  }
+}
