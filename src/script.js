@@ -2,7 +2,7 @@
 
 const { log } = console;
 
-const audio = new Audio("./assets/audios/click.mp3"),
+const audio = new Audio(`${location.origin}${location.pathname}assets/audios/click.mp3`),
   playClickAudio = () => {
     audio.currentTime = 0;
     audio.play();
