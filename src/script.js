@@ -2,7 +2,9 @@
 
 const { log } = console;
 
-const audio = new Audio(`${location.origin}${location.pathname}assets/audios/click.mp3`),
+const audio = new Audio(
+    `${location.origin}${location.pathname}assets/audios/click.mp3`,
+  ),
   playClickAudio = () => {
     audio.currentTime = 0;
     audio.play();
@@ -117,6 +119,8 @@ document.body.addEventListener("pointerdown", async (e) => {
     );
   } else if (button.classList.contains("delete")) {
     if (calculator.input === "O.") calculator.input = "";
+    else if (calculator.input.slice(-2) === "O.")
+      calculator.input = calculator.input.slice(0, -2);
     else calculator.input = calculator.input.slice(0, -1);
   } else if (button.classList.contains("equals")) {
     calculator.input = calculator.result.replaceAll(",", "");
