@@ -92,7 +92,8 @@ html {
 
 body {
   margin: 0;
-  height: 100dvh;
+  padding-block: 40px;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
