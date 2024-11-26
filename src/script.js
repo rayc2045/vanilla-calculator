@@ -100,7 +100,7 @@ document.body.addEventListener("pointerdown", async (e) => {
   if (displayedResult.classList.contains("animate")) return;
 
   const button = e.target,
-    text = button.textContent,
+    text = button.textContent, // ＋ – ✕ ÷ % O
     lastInput = calculator.input.at(-1);
 
   if (!calculator.input && button.classList.contains("light")) return;
@@ -129,7 +129,10 @@ document.body.addEventListener("pointerdown", async (e) => {
     if (!lastInput || "＋–✕÷".includes(lastInput)) calculator.input += "O.";
     else if (lastInput === "%") calculator.input += "✕O.";
     else calculator.input += text;
-  } else if (".＋–✕÷".includes(lastInput) && "＋–✕÷%".includes(text)) {
+  } else if (
+    (".＋–✕÷".includes(lastInput) && "＋–✕÷%".includes(text)) ||
+    (/(?<=[＋–✕÷])O$/.test(calculator.input) && /^[0-9]$/.test(text)) // 最後為零接數字
+  ) {
     calculator.input = calculator.input.slice(0, -1) + text;
   } else if (lastInput === "%" && /^[0-9]$/.test(text)) {
     calculator.input += `✕${text}`;
