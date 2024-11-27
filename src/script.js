@@ -39,12 +39,11 @@ const calculator = {
       .replaceAll("✕", " X ")
       .replaceAll("–", " – ")
       .replaceAll("＋", " ＋ ")
-      .replace(/(\d+)(\.\d+)?/g, (match, integerPart, decimalPart) => {
-        const formattedInteger = formatNumber(integerPart, {
-          maximumFractionDigits: 4,
-        });
-        return decimalPart ? formattedInteger + decimalPart : formattedInteger;
-      });
+      .replace(/(\d+)(\.\d+)?/g, (match, integerPart, decimalPart) =>
+        decimalPart?.slice(1).length > 6
+          ? formatNumber(match, { maximumFractionDigits: 6 })
+          : match,
+      );
   },
   get expression() {
     return this.input
