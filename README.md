@@ -11,7 +11,7 @@
 - 使用專為網頁設計的 WOFF2 (Web Open Font Format) 格式字體搭配 CSS `@font-face` 達成字體自託管。
 - 為計算機按鈕設計按壓前後的陰影效果以模擬光線在真實按鈕上的視覺感受。
 - 搭配 `new Function()` 進行數學運算，讓計算結果即時反饋，並將輸入和計算結果的數字以千分位表示，提升操作體驗和易用性。
-- 針對計算結果的顯示設計了四種字體大小，實現根據數字長度自動替換對應的字體樣式，從而保證整體佈局的美觀與實用性。
+- 將輸入數字的小數點位數限制為 6 位，計算結果的小數點位數限制為 4 位。同時，為計算結果設計了四種字體大小，能根據數字的長度自動切換對應的樣式，從而兼顧整體佈局的美觀與實用性。
 - 利用 JavaScript 物件的 getter 方法，有效管理輸入內容、運算式與計算結果，並實現了資料與操作邏輯的分離，提升代碼的結構性與可維護性。
 - 結合 DOM 操作與 Regex 正規表達式判斷，改善許多可能導致計算錯誤或無法執行的輸入，使計算更加準確且流暢，大幅提升操作體驗。
 
@@ -42,6 +42,6 @@ This project combines my personal insights into UI/UX design with careful adjust
 - Used WOFF2 (Web Open Font Format) fonts with CSS `@font-face` to enable self-hosted typography optimized for the web.
 - Designed shadow effects for button states to mimic the realistic lighting and tactile feedback of physical buttons.
 - Integrated `new Function()` for mathematical computations to ensure real-time feedback and displayed results with thousands separators for enhanced readability and usability.
-- Created four font size variations for calculation results, enabling automatic font adjustments based on the length of the input to maintain a visually appealing layout.
+- Input numbers are limited to 6 decimal places, while calculation results are capped at 4 decimal places. Additionally, four font sizes have been designed for displaying results, allowing automatic adjustments based on the length of the numbers. This ensures a visually appealing and practical layout.
 - Leveraged JavaScript object getters to efficiently manage input, expressions, and results, achieving a clear separation of data handling and operational logic for better code maintainability.
 - Combined DOM manipulation with regular expressions (Regex) to validate and improve input logic, resolving potential issues that could lead to errors or non-functional expressions. This significantly enhanced accuracy and streamlined the overall user experience.
