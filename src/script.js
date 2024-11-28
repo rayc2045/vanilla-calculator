@@ -124,16 +124,17 @@ document.body.addEventListener("pointerdown", async (e) => {
   } else if (button.classList.contains("equals")) {
     calculator.input = calculator.result.replaceAll(",", "");
   } else if (text === ".") {
-    if (lastInput === "." || /\d+\.\d+$/.test(calculator.input)) return; // 最後數字帶有小數點
+    if (lastInput === "." || /\d+\.\d+$/.test(calculator.input)) return;
     if (!lastInput || "＋–✕÷".includes(lastInput)) calculator.input += "O.";
     else if (lastInput === "%") calculator.input += "✕O.";
     else calculator.input += text;
   } else if (
     (".＋–✕÷".includes(lastInput) && "＋–✕÷%".includes(text)) ||
-    (/(?<=[＋–✕÷])O$/.test(calculator.input) && /^[0-9]$/.test(text)) // 最後為零接數字
+    (/(?<=[＋–✕÷])O$/.test(calculator.input) &&
+      (/^[0-9]$/.test(text) || text === "O"))
   ) {
     calculator.input = calculator.input.slice(0, -1) + text;
-  } else if (lastInput === "%" && /^[0-9]$/.test(text)) {
+  } else if (lastInput === "%" && (/^[0-9]$/.test(text) || text === "O")) {
     calculator.input += `✕${text}`;
   } else if (!lastInput && text === "O") {
     return;
