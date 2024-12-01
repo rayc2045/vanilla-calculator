@@ -14,6 +14,7 @@
 - 將輸入顯示的數字小數點位數限制為六位，計算結果的小數點位數限制為四位。同時，為計算結果設計了四種字體大小，能根據數字的長度自動切換對應的樣式，從而兼顧整體佈局的美觀與實用性。
 - 利用 JavaScript 物件的 getter 方法，有效管理輸入內容、運算式與計算結果，並實現了資料與操作邏輯的分離，提升代碼的結構性與可維護性。
 - 結合 DOM 操作與 Regex 正規表達式判斷，改善許多可能導致計算錯誤或無法執行的輸入，使計算更加準確且流暢，大幅提升操作體驗。
+- 加入支持結構化數據的 NoSQL 資料庫 [indexedDB](https://web.dev/articles/indexeddb?hl=zh-tw)，保留輸入記錄。
 
 ---
 
@@ -45,3 +46,4 @@ This project combines my personal insights into UI/UX design with careful adjust
 - Displayed input numbers are limited to 6 decimal places, while calculation results are capped at 4 decimal places. Additionally, four font sizes have been designed for displaying results, allowing automatic adjustments based on the length of the numbers. This ensures a visually appealing and practical layout.
 - Leveraged JavaScript object getters to efficiently manage input, expressions, and results, achieving a clear separation of data handling and operational logic for better code maintainability.
 - Combined DOM manipulation with regular expressions (Regex) to validate and improve input logic, resolving potential issues that could lead to errors or non-functional expressions. This significantly enhanced accuracy and streamlined the overall user experience.
+- Integrated [IndexedDB](https://web.dev/articles/indexeddb), a NoSQL database supporting structured data, to preserve input records.

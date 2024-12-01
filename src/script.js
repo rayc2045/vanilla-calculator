@@ -2,6 +2,8 @@
 
 const { log } = console;
 
+const db = new IndexedDBWrapper("vanilla-calculator");
+
 const audio = new Audio(
     `${location.origin}${location.pathname}assets/audios/click.mp3`,
   ),
@@ -9,26 +11,6 @@ const audio = new Audio(
     audio.currentTime = 0;
     audio.play();
   };
-
-const formatNumber = (num, option = {}) => {
-  const { maximumFractionDigits = 3, useGrouping = true } = option;
-
-  const numericValue = Number(num);
-  if (isNaN(numericValue)) throw new TypeError("Input must be a valid number.");
-
-  const threshold = 1 / Math.pow(10, maximumFractionDigits); // O.001
-  if (Math.abs(numericValue) < threshold) return "0";
-
-  const roundedNum = Number(numericValue.toFixed(maximumFractionDigits)),
-    [integerPart, decimalPart] = roundedNum.toString().split("."),
-    formattedInteger = useGrouping
-      ? integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      : integerPart,
-    formattedDecimal =
-      decimalPart && decimalPart.length > 0 ? `.${decimalPart}` : "";
-
-  return formattedInteger + formattedDecimal;
-};
 
 const calculator = {
   input: "",
@@ -91,7 +73,10 @@ const displayedInput = document.querySelector("#input"),
     displayedResult.removeAttribute("style");
   };
 
-updateView();
+window.addEventListener("load", async () => {
+  calculator.input = (await db.get("input")) || "";
+  updateView();
+});
 
 document.body.addEventListener("pointerdown", async (e) => {
   if (!e.target.parentElement.classList.contains("buttons-container")) return;
@@ -144,5 +129,7 @@ document.body.addEventListener("pointerdown", async (e) => {
     calculator.input += text;
   }
 
+  if (!calculator.input) await db.clear();
+  else await db.set("input", calculator.input);
   updateView();
 });
