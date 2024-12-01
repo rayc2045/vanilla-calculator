@@ -24,7 +24,7 @@ const calculator = {
       .replace(/(\d+)(\.\d+)?/g, (match, integerPart, decimalPart) =>
         decimalPart?.slice(1).length > 6
           ? formatNumber(match, { maximumFractionDigits: 6 })
-          : match,
+          : formatNumber(integerPart) + (decimalPart || ""),
       );
   },
   get expression() {
