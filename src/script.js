@@ -35,10 +35,10 @@ const calculator = {
   get displayedInput() {
     return this.input
       .replaceAll("O", "0")
-      .replaceAll("÷", " ÷ ")
-      .replaceAll("✕", " X ")
-      .replaceAll("–", " – ")
       .replaceAll("＋", " ＋ ")
+      .replaceAll("–", " – ")
+      .replaceAll("✕", " X ")
+      .replaceAll("÷", " ÷ ")
       .replace(/(\d+)(\.\d+)?/g, (match, integerPart, decimalPart) =>
         decimalPart?.slice(1).length > 6
           ? formatNumber(match, { maximumFractionDigits: 6 })
@@ -47,18 +47,18 @@ const calculator = {
   },
   get expression() {
     return this.input
-      .replaceAll("%", "/ 100")
-      .replaceAll("÷", "/")
-      .replaceAll("✕", "*")
-      .replaceAll("–", "-")
+      .replaceAll("O", "0")
       .replaceAll("＋", "+")
-      .replaceAll("O", "0");
+      .replaceAll("–", "-")
+      .replaceAll("✕", "*")
+      .replaceAll("÷", "/")
+      .replaceAll("%", "/100");
   },
   get result() {
-    if (!this.input) return 0;
+    if (!/[0-9]/.test(this.expression)) return 0;
     const result = new Function(
       `return ${
-        "/*-+".includes(this.expression.at(-1))
+        "+-*/".includes(this.expression.at(-1))
           ? this.expression.slice(0, -1)
           : this.expression
       }`,
@@ -102,7 +102,8 @@ document.body.addEventListener("pointerdown", async (e) => {
     text = button.textContent, // ＋ – ✕ ÷ % O
     lastInput = calculator.input.at(-1);
 
-  if (!calculator.input && button.classList.contains("light")) return;
+  if (!calculator.input && button.classList.contains("light") && text !== "–")
+    return;
   if (button.classList.contains("clear")) {
     [displayedInput, displayedResult].forEach((el) =>
       el.classList.add("animate"),
@@ -133,7 +134,8 @@ document.body.addEventListener("pointerdown", async (e) => {
     (/(?<=[＋–✕÷])O$/.test(calculator.input) &&
       (/^[0-9]$/.test(text) || text === "O"))
   ) {
-    calculator.input = calculator.input.slice(0, -1) + text;
+    if (calculator.input === "–") calculator.input = "";
+    else calculator.input = calculator.input.slice(0, -1) + text;
   } else if (lastInput === "%" && (/^[0-9]$/.test(text) || text === "O")) {
     calculator.input += `✕${text}`;
   } else if (!lastInput && text === "O") {
